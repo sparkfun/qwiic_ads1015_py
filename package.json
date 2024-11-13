@@ -1,6 +1,6 @@
 {
     "urls": [
-      ["qwiic_template.py", "github:sparkfun/Qwiic_Template_Py/qwiic_template.py"]
+      ["qwiic_ads1015.py", "github:sparkfun/Qwiic_ADS1015_Py/qwiic_ads1015.py"]
     ],
     "deps": [
       ["github:sparkfun/Qwiic_I2C_Py", "master"]

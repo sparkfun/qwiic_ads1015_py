@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 #-------------------------------------------------------------------------------
-# qwiic_template_ex1_title.py TODO: replace template and title
+# qwiic_ads1015_ex6_display_millivolts.py
 #
-# TODO: Add description for this example
+#   This example shows how to output ADC values on one single-ended channel (A3).
+#   It will also print out the voltage of the reading in mV.
+#   Note, the conversion multiplier needs to be corrected for gain settings,
+#   And this is done automatically in the library, using .getMultiplier(),
+#   as shown below.
+  
+#   *at gain setting of 1, like in this example (and 3.3V VCC), 0-3.3V will read 0-1652.
+# 
 #-------------------------------------------------------------------------------
-# Written by SparkFun Electronics, TODO: month and year
+# Written by SparkFun Electronics, November 2024
 #
 # This python library supports the SparkFun Electroncis Qwiic ecosystem
 #
@@ -33,30 +40,40 @@
 # SOFTWARE.
 #===============================================================================
 
-import qwiic_template # TODO Import correct package
+import qwiic_ads1015
 import sys
+import time
 
 def runExample():
-	# TODO Replace template and title
-	print("\nQwiic Template Example 1 - Title\n")
+	print("\nQwiic ADS1015 Example 6 - Display Millivolts\n")
 
-	# Create instance of device
-	myDevice = qwiic_template.QwiicTemplate() # TODO update as needed
+	myAds = qwiic_ads1015.QwiicADS1015()
 
 	# Check if it's connected
-	if myDevice.is_connected() == False:
+	if myAds.is_connected() == False:
 		print("The device isn't connected to the system. Please check your connection", \
 			file=sys.stderr)
 		return
 
-	# Initialize the device
-	myDevice.begin()
+	myAds.begin()
 
-	# TODO Add basic example code
+	myAds.set_gain(myAds.kConfigPga1)
+
+	while True:
+		channel_A3 = myAds.get_single_ended(3)
+		print("A3: ", channel_A3, end = '\t')
+		
+		# Get the multiplier for the gain setting
+		multiplier = myAds.get_multiplier()
+		# The private variable _multiplierToVolts is auto-updated each time setGain is called
+		print(channel_A3 * multiplier, "mV")
+
+		print("Differential: ", input)
+		time.sleep(0.050)
 
 if __name__ == '__main__':
 	try:
 		runExample()
 	except (KeyboardInterrupt, SystemExit) as exErr:
-		print("\nEnding Example")
+		print("\nEnding Example 2")
 		sys.exit(0)
