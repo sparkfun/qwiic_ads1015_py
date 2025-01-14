@@ -33,7 +33,7 @@
 # SOFTWARE.
 #===============================================================================
 
-"""
+"""!
 qwiic_ads1015
 ============
 Python module for the [SparkFun Qwiic ADS1015](https://www.sparkfun.com/products/15334)
@@ -129,15 +129,13 @@ class QwiicADS1015(object):
     kConfigCqueNone = 0x0003  # Disable the comparator and put ALERT/RDY in high state (default)
 
     def __init__(self, address=None, i2c_driver=None):
-        """
+        """!
         Constructor
 
-        :param address: The I2C address to use for the device
+        @param int, optional address: The I2C address to use for the device
             If not provided, the default address is used
-        :type address: int, optional
-        :param i2c_driver: An existing i2c driver object
+        @param I2CDriver, optional i2c_driver: An existing i2c driver object
             If not provided, a driver object is created
-        :type i2c_driver: I2CDriver, optional
         """
 
         # Use address if provided, otherwise pick the default
@@ -165,11 +163,10 @@ class QwiicADS1015(object):
         self._calibrationValues = [[0,0],[0,0]]
 
     def is_connected(self):
-        """
+        """!
         Determines if this device is connected
 
-        :return: `True` if connected, otherwise `False`
-        :rtype: bool
+        @return **bool** `True` if connected, otherwise `False`
         """
         # Check if connected by seeing if an ACK is received
         # TODO: If the device has a product ID register, that should be
@@ -179,11 +176,10 @@ class QwiicADS1015(object):
     connected = property(is_connected)
 
     def begin(self):
-        """
+        """!
         Initializes this device with default parameters
 
-        :return: Returns `True` if successful, otherwise `False`
-        :rtype: bool
+        @return **bool** Returns `True` if successful, otherwise `False`
         """
         # Confirm device is connected before doing anything
         if not self.is_connected():
@@ -193,13 +189,12 @@ class QwiicADS1015(object):
 
 
     def get_single_ended(self, channel):
-        """
+        """!
         Returns the decimal value of sensor channel single-ended input
-        :param channel: The channel to read
-        :type channel: int
 
-        :return: The decimal value of the sensor channel
-        :rtype: int
+        @param int channel: The channel to read
+
+        @return **int** The decimal value of the sensor channel
         """
         if channel > 3:
             return 0
@@ -234,13 +229,12 @@ class QwiicADS1015(object):
         return result >> 4
     
     def get_single_ended_signed(self, channel):
-        """
+        """!
         Returns the signed value of sensor channel single-ended input
-        :param channel: The channel to read
-        :type channel: int
 
-        :return: The signed value of the sensor channel
-        :rtype: int
+        @param int channel: The channel to read
+
+        @return **int** The signed value of the sensor channel
         """
         value = self.get_single_ended(channel)
         if value > 32767:
@@ -249,18 +243,17 @@ class QwiicADS1015(object):
         return value
     
     def get_single_ended_millivolts(self, channel):
-        """
+        """!
         Returns the millivolt value of sensor channel single-ended input
-        :param channel: The channel to read
-        :type channel: int
 
-        :return: The millivolt value of the sensor channel
-        :rtype: float
+        @param int channel: The channel to read
+
+        @return **float** The millivolt value of the sensor channel
         """
         return self.get_single_ended(channel) * self.get_multiplier()
     
     def get_differential(self, config_mux_diff=kConfigMuxDiffP0N1):
-        """
+        """!
         Returns the signed decimal value of sensor differential input
         Note, there are 4 possible differential pin setups:
         kConfigMuxDiffP0N1
@@ -268,11 +261,9 @@ class QwiicADS1015(object):
         kConfigMuxDiffP1N3
         kConfigMuxDiffP2N3
 
-        :param config_mux_dif: The differential pin set up from the list above
-        :type config_mux_dif: int
+        @param int config_mux_dif: The differential pin set up from the list above
 
-        :return: The signed value of the sensor differential input channel
-        :rtype: int
+        @return **int** The signed value of the sensor differential input channel
         """
         if config_mux_diff not in [
             self.kConfigMuxDiffP0N1,
@@ -308,7 +299,7 @@ class QwiicADS1015(object):
         return result
 
     def get_differential_millivolts(self, config_mux_diff=kConfigMuxDiffP0N1):
-        """
+        """!
         Returns the millivolt value of sensor differential input
         Note, there are 4 possible differential pin setups:
         kConfigMuxDiffP0N1
@@ -316,40 +307,34 @@ class QwiicADS1015(object):
         kConfigMuxDiffP1N3
         kConfigMuxDiffP2N3
 
-        :param config_mux_dif: The differential pin set up from the list above
-        :type config_mux_dif: int
+        @param int config_mux_dif: The differential pin set up from the list above
 
-        :return: The millivolt value of the sensor differential input channel
-        :rtype: float
+        @return **float** The millivolt value of the sensor differential input channel
         """
         value = self.get_differential(config_mux_diff)
         return value * self.get_multiplier()
     
     def mapf(self, val, in_min, in_max, out_min, out_max):
-        """
-            Maps a value from one range to another
-            :param val: The value to map
-            :type val: float
-            :param in_min: The minimum value of the input range
-            :type in_min: float
-            :param in_max: The maximum value of the input range
-            :type in_max: float
-            :param out_min: The minimum value of the output range
-            :type out_min: float
-            :param out_max: The maximum value of the output range
-            :type out_max: float
-            :return: The mapped value
-            :rtype: float
+        """!
+        Maps a value from one range to another
+
+        @param float val: The value to map
+        @param float in_min: The minimum value of the input range
+        @param float in_max: The maximum value of the input range
+        @param float out_min: The minimum value of the output range
+        @param float out_max: The maximum value of the output range
+
+        @return **float** The mapped value
         """
         return (val - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
     def get_scaled_analog_data(self, channel):
-        """
+        """!
         Returns a value between 0 and 1 based on how bent the finger is. This function will not work with an uncalibrated sensor
-        :param channel: The channel to read
-        :type channel: int
-        :return: The scaled value of the sensor
-        :rtype: float
+
+        @param int channel: The channel to read
+
+        @return **float** The scaled value of the sensor
         """
         if channel > 3:
             return 0
@@ -364,7 +349,7 @@ class QwiicADS1015(object):
             return data
 
     def calibrate(self):
-        """
+        """!
         Perform calibration on the sensor. This function will set the calibration values for each finger
         """
         for finger in range(2):
@@ -375,54 +360,51 @@ class QwiicADS1015(object):
                 self._calibrationValues[finger][0] = value
     
     def get_calibration(self, channel, hiLo):
-        """
+        """!
         Returns the calibration value for the specified channel and hiLo
-        :param channel: The channel to read
-        :type channel: int
-        :param hiLo: The hiLo to read
-        :type hiLo: int
-        :return: The calibration value
-        :rtype: int
+
+        @param int channel: The channel to read
+        @param int hiLo: The hiLo to read
+
+        @return **int** The calibration value
         """
         return self._calibrationValues[channel][hiLo]
     
     def set_calibration(self, channel, hiLo, value):
-        """
+        """!
         Sets the calibration value for the specified channel and hiLo
-        :param channel: The channel to read
-        :type channel: int
-        :param hiLo: The hiLo to read
-        :type hiLo: int
-        :param value: The value to set
-        :type value: int
+
+        @param int channel: The channel to read
+        @param int hiLo: The hiLo to read
+        @param int value: The value to set
         """
         self._calibrationValues[channel][hiLo] = value
     
     def reset_calibration(self):
-        """
+        """!
         Resets the calibration values to 0
         """
         self._calibrationValues = [[0,0],[0,0]]
     
     def set_mode(self, mode):
-        """
+        """!
         Sets the mode of the device. Continuous mode 0 is favored
-        :param mode: The mode to set
-        :type mode: int
+
+        @param int mode: The mode to set
         """
         mode &= self.kConfigModeSingle
         self._mode = mode
 
     def get_mode(self):
-        """
+        """!
         Returns the mode of the device. get_mode will return 0 for continuous and ADS1015_CONFIG_MODE_SINGLE for single shot
-        :return: The mode of the device
-        :rtype: int
+
+        @return **int** The mode of the device
         """
         return self._mode
 
     def set_gain(self, gain):
-        """
+        """!
         Sets the gain of the device. 
         Valid values are: 
             kConfigPgaTwoThirds,
@@ -432,15 +414,14 @@ class QwiicADS1015(object):
             kConfigPga8,
             kConfigPga16
 
-        :param gain: The gain to set
-        :type gain: int
+        @param int gain: The gain to set
         """
         gain &= self.kConfigPgaMask
         self._gain = gain
         self.update_multiplier_to_volts() # each new gain setting changes how we convert to volts
     
     def get_gain(self):
-        """
+        """!
         Returns the gain of the device
             Will return a differnet hex value of each gain setting:
             0x0E00: +/- 0.256V
@@ -451,13 +432,12 @@ class QwiicADS1015(object):
             0X0800: +/- 0.512V
             0X0A00: +/- 0.256V
 
-        :return: The gain of the device
-        :rtype: int
+        @return **int** The gain of the device
         """
         return self._gain
     
     def update_multiplier_to_volts(self):
-        """
+        """!
         Updates the multiplier to convert to volts
         """
         if self._gain == self.kConfigPgaTwoThirds:
@@ -476,24 +456,24 @@ class QwiicADS1015(object):
             self._multiplierToVolts = 1.0
 
     def get_multiplier(self):
-        """
+        """!
         Returns the multiplier to convert to volts
-        :return: The multiplier to convert to volts
-        :rtype: float
+
+        @return **float** The multiplier to convert to volts
         """
         return self._multiplierToVolts
 
     def set_sample_rate(self, rate):
-        """
+        """!
         Sets the sample rate of the device
-        :param rate: The sample rate to set
-        :type rate: int
+
+        @param int rate: The sample rate to set
         """
         rate &= self.kConfigRateMask
         self._sampleRate = rate
     
     def get_sample_rate(self):
-        """
+        """!
         Will return a different hex value for each sample rate
         Possible Values:
             0x0000: 128 Hz
@@ -504,22 +484,21 @@ class QwiicADS1015(object):
             0X00A0: 2400 Hz
             0X00C0: 3300 Hz
 
-        :return: The sample rate of the device
-        :rtype: int
+        @return **int** The sample rate of the device
         """
         return self._sampleRate
     
     def available(self):
-        """
+        """!
         Checks to see if the Operational Status (OS) flag is set in the status register
-        :return: True if the OS flag is set, otherwise False
-        :rtype: bool
+
+        @return **bool** True if the OS flag is set, otherwise False
         """
         value = self._i2c.readWord(self.address, self.kPointerConfig)
         return (value & self.kConfigOsReady > 0)
     
     def set_comparator_single_ended(self, channel, threshold):
-        """
+        """!
         Sets up the comparator to operate in basic mode, causing the
             ALERT/RDY pin to assert (go from high to low) when the ADC
             value exceeds the specified threshold.
@@ -530,10 +509,8 @@ class QwiicADS1015(object):
         located here:
         https://github.com/adafruit/Adafruit_ADS1X15
 
-        :param channel: The channel to read
-        :type channel: int
-        :param threshold: The threshold value to compare
-        :type threshold: int
+        @param int channel: The channel to read
+        @param int threshold: The threshold value to compare
         """
         if channel > 3:
             return 0
@@ -567,8 +544,8 @@ class QwiicADS1015(object):
         self._i2c.writeWord(self.address, self.kPointerConfig, config)
     
     def get_last_conversion_results(self):
-        """
-            In order to clear the comparator, we need to read the
+        """!
+        In order to clear the comparator, we need to read the
             conversion results.  This function reads the last conversion
             results without changing the config value.
 
@@ -576,8 +553,7 @@ class QwiicADS1015(object):
             located here:
             https://github.com/adafruit/Adafruit_ADS1X15
 
-            :return: The last conversion result
-            :rtype: int
+        @return **int** The last conversion result
         """
 
         # Read the conversion results
@@ -592,7 +568,7 @@ class QwiicADS1015(object):
         return result
 
     def conversion_delay(self):
-        """
+        """!
         Delay for experimentally-determined delay times based on sample rate.
         These were determined experimentally by using Example7
         """
@@ -612,14 +588,13 @@ class QwiicADS1015(object):
             time.sleep(0.016000) # 128Hz
     
     def use_conversion_ready(self, enable):
-        """
+        """!
         Enables or disables the use of useConversionReady
 
         When useConversionReady is enabled:
         The Config Register OS bit is read to determine when the conversion is complete - instead of using conversionDelay.
         Single-shot mode is always selected. _mode is ignored.
 
-        :param enable: True to enable, False to disable
-        :type enable: bool
+        @param bool enable: True to enable, False to disable
         """
         self._useConversionReady = enable
