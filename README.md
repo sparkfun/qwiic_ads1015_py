@@ -23,7 +23,7 @@ This repository implements a Python package for the SparkFun Qwiic ADS1015. This
 
 ## About the Package
 
-This python package enables the user to access the features of the ADS1015 via a single Qwiic cable. This includes <reading single-ended voltage, reading differential voltage, setting gain> and more. The capabilities of the ADS1015 are each demonstrated in the included examples.
+This python package enables the user to access the features of the ADS1015 via a single Qwiic cable. This includes reading single-ended voltage, reading differential voltage, setting gain and more. The capabilities of the ADS1015 are each demonstrated in the included examples.
 
 New to qwiic? Take a look at the entire [SparkFun qwiic ecosystem](https://www.sparkfun.com/qwiic).
 
@@ -100,13 +100,12 @@ circup install --py qwiic_ads1015
 If you would like to install any of the examples from this repository, issue the corresponding circup command from below. (NOTE: The below syntax assumes you are using CircUp on Windows. Linux and Mac will have different path seperators (i.e. "/" vs. "\"). See the [CircUp "example" command documentation](https://learn.adafruit.com/keep-your-circuitpython-libraries-on-devices-up-to-date-with-circup/example-command) for more information)
 
 ```sh
-circup example qwiic_ads1015\qwiic_template_ex1_read_basic
-circup example qwiic_ads1015\qwiic_template_ex2_change_gain
-circup example qwiic_ads1015\qwiic_template_ex3_address
-circup example qwiic_ads1015\qwiic_template_ex4_differential
-circup example qwiic_ads1015\qwiic_template_ex6_display_millivolts
-circup example qwiic_ads1015\qwiic_template_ex7_multi_channel
-
+circup example qwiic_ads1015\qwiic_ads1015_ex1_read_basic
+circup example qwiic_ads1015\qwiic_ads1015_ex2_change_gain
+circup example qwiic_ads1015\qwiic_ads1015_ex3_address
+circup example qwiic_ads1015\qwiic_ads1015_ex4_differential
+circup example qwiic_ads1015\qwiic_ads1015_ex6_display_millivolts
+circup example qwiic_ads1015\qwiic_ads1015_ex7_multi_channel
 ```
 
 Example Use

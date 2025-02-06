@@ -3,12 +3,12 @@ Below is a brief summary of each of the example programs included in this reposi
 
 NOTE: Any numbering of examples is to retain consistency with the Arduino library from which this was ported. 
 
-## Qwiic Template Ex1 Read Basic
+## Qwiic Ads1015 Ex1 Read Basic
 This example shows how to output ADC values on one single-ended channel (A3).
    *at default gain setting of 1 (and 3.3V VCC), 0-2V will read 0-2047.
    *anything greater than 2V will read 2047.
 
-## Qwiic Template Ex2 Change Gain
+## Qwiic Ads1015 Ex2 Change Gain
 This example shows how to output ADC values on one single-ended channel (A3) with a PGA GAIN of 1. 
    At this gain setting (and 3.3V VCC), 0-3.3V will read 0-1652.
 
@@ -23,17 +23,17 @@ This example shows how to output ADC values on one single-ended channel (A3) wit
    ADS1015_CONFIG_PGA_8          +/- 0.512v
    ADS1015_CONFIG_PGA_16         +/- 0.256v
 
-## Qwiic Template Ex3 Address
+## Qwiic Ads1015 Ex3 Address
 This example shows how to output ADC values on one single-ended channel (A3) with a NON-default address.
    This is useful if you'd like to connect multiple ADS1015 boards on the same bus.
    Note, you must cut a trace on the product hardware and solder to "0x49" jumper for this code to work.
 
-## Qwiic Template Ex4 Differential
+## Qwiic Ads1015 Ex4 Differential
 This example shows how to output ADC values on one differential input between A0 and A1.
    *at default gain setting of 1 (and 3.3V VCC), 0-2V will read 0-2047.
    *anything greater than 2V will read 2047.
 
-## Qwiic Template Ex6 Display Millivolts
+## Qwiic Ads1015 Ex6 Display Millivolts
 This example shows how to output ADC values on one single-ended channel (A3).
    It will also print out the voltage of the reading in mV.
    Note, the conversion multiplier needs to be corrected for gain settings,
@@ -42,7 +42,7 @@ This example shows how to output ADC values on one single-ended channel (A3).
   
    *at gain setting of 1, like in this example (and 3.3V VCC), 0-3.3V will read 0-1652.
 
-## Qwiic Template Ex7 Multi Channel
+## Qwiic Ads1015 Ex7 Multi Channel
 This example shows how to output ADC values on multiple channels.
   
    It is based on the example provided by @StefanThoresson in Issue 6:
