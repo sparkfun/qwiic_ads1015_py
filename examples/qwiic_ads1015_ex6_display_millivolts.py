@@ -68,12 +68,11 @@ def runExample():
 		# The private variable _multiplierToVolts is auto-updated each time setGain is called
 		print(channel_A3 * multiplier, "mV")
 
-		print("Differential: ", input)
 		time.sleep(0.050)
 
 if __name__ == '__main__':
 	try:
 		runExample()
 	except (KeyboardInterrupt, SystemExit) as exErr:
-		print("\nEnding Example 2")
+		print("\nEnding Example 6")
 		sys.exit(0)

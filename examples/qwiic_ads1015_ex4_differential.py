@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #-------------------------------------------------------------------------------
-# qwiic_ads1015_ex3_address.py
+# qwiic_ads1015_ex4_differential.py
 #
-#   This example shows how to output ADC values on one single-ended channel (A3) with a NON-default address.
-#   This is useful if you'd like to connect multiple ADS1015 boards on the same bus.
-#   Note, you must cut a trace on the product hardware and solder to "0x49" jumper for this code to work.
+#   This example shows how to output ADC values on one differential input between A0 and A1.
+#   *at default gain setting of 1 (and 3.3V VCC), 0-2V will read 0-2047.
+#   *anything greater than 2V will read 2047.
 # 
 #-------------------------------------------------------------------------------
 # Written by SparkFun Electronics, November 2024
@@ -41,11 +41,9 @@ import sys
 import time
 
 def runExample():
-	print("\nQwiic ADS1015 Example 3 - Address\n")
+	print("\nQwiic ADS1015 Example 4 - Differential\n")
 
-	# Create instance of device
-	# note, you must cut a trace and close the "0x49" jumper for this to work.
-	myAds = qwiic_ads1015.QwiicADS1015(0x49) # 0x49 is the address of the ADS1015 with the jumper soldered (default is 0x48)
+	myAds = qwiic_ads1015.QwiicADS1015()
 
 	# Check if it's connected
 	if myAds.is_connected() == False:
@@ -56,13 +54,19 @@ def runExample():
 	myAds.begin()
 
 	while True:
-		channel_A3 = myAds.get_single_ended(3)
-		print("A3: ", channel_A3)
-		time.sleep(0.050)
+		input = myAds.get_differential() # default (i.e. no arguments)
+  		
+		# Optional "commented out" examples below show how to read differential readings between other pins
+		# input = myAds.get_differential(myAds.kConfigMuxDiffP0N3)
+		# input = myAds.get_differential(myAds.kConfigMuxDiffP1N3)
+		# input = myAds.get_differential(myAds.kConfigMuxDiffP2N3)
+
+		print("Differential: ", input)
+		time.sleep(0.30)
 
 if __name__ == '__main__':
 	try:
 		runExample()
 	except (KeyboardInterrupt, SystemExit) as exErr:
-		print("\nEnding Example 2")
+		print("\nEnding Example 4")
 		sys.exit(0)
